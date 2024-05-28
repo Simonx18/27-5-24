@@ -4,6 +4,7 @@ require('dotenv').config();
 
 const authorRoutes = require('./routes/authorRoutes');
 const postRoutes = require('./routes/postRoutes');
+const commentRoutes = require('./routes/commentRoutes');
 
 const app = express();
 app.use(express.json());
@@ -15,6 +16,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 app.use('/authors', authorRoutes);
 app.use('/blogPosts', postRoutes);
+app.use('/blogPosts', commentRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
