@@ -1,8 +1,7 @@
 const express = require('express');
-const { uploadAvatar } = require('../controllers/authorController');
-const upload = require('../services/uploadService');
+const { registerAuthor } = require('../controllers/authorController');
 const router = express.Router();
 
-router.patch('/:authorId/avatar', upload.single('image'), uploadAvatar);
+router.post('/', registerAuthor);
 
 module.exports = router;

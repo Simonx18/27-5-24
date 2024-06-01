@@ -1,11 +1,30 @@
 const Author = require('../models/author');
-const sendEmail = require('../services/emailService');
 
-const uploadAvatar = async (req, res) => {
-  const { authorId } = req.params;
-  const imageUrl = req.file.path;
-  await Author.findByIdAndUpdate(authorId, { avatar: imageUrl });
-  res.status(200).send({ message: 'Avatar updated successfully', imageUrl });
+const registerAuthor = async (req, res) => {
+  const { name, email, password } = req.body;
+
+  const authorExists = await Author.findOne({ email });
+
+  if (authorExists) {
+    res.status(400).send({ message: 'Author already exists' });
+  } else {
+    const author = await Author.create({
+      name,
+      email,
+      password,
+    });
+
+    if (author) {
+      res.status(201).json({
+        _id: author._id,
+        name: author.name,
+        email: author.email,
+        token: generateToken(author._id),
+      });
+    } else {
+      res.status(400).send({ message: 'Invalid author data' });
+    }
+  }
 };
 
-module.exports = { uploadAvatar };
+module.exports = { registerAuthor };
