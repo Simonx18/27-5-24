@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const passport = require('passport');
+require('./config/passport');
 
 const authorRoutes = require('./routes/authorRoutes');
 const postRoutes = require('./routes/postRoutes');
@@ -16,6 +18,7 @@ mongoose.connect(process.env.MONGODB_URI, {
   useUnifiedTopology: true,
 });
 
+app.use(passport.initialize());
 app.use('/authors', authorRoutes);
 app.use('/blogPosts', protect, postRoutes);
 app.use('/blogPosts', protect, commentRoutes);
