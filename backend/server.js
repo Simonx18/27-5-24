@@ -8,6 +8,8 @@ const authorRoutes = require('./routes/authorRoutes');
 const postRoutes = require('./routes/postRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const authRoutes = require('./routes/authRoutes');
+const cors = require('cors');
+app.use(cors({ origin:'https://27-5-24-simonx18s-projects.vercel.app' }));
 const { protect } = require('./middleware/authMiddleware');
 
 const app = express();
